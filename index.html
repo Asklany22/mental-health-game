@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer and Mental Health Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <header>
+        <div class="header-container">
+            <h1 class="animated-title">Mental Health Game</h1>
+            <img src="images/IEEE Logo_20240629_212107_0000.png" alt="IEEE Logo" class="ieee-logo">
+        </div>
+        
+    </header>
+    <div class="meteor-shower"></div> 
+    <!-- Game Setup Section -->
+    <!-- Game Setup Section -->
+<section id="game-setup" class="game-setup">
+
+    <div class="team-setup">
+        <!-- Team 2 (يسار) -->
+        <div class="team team-left">
+            <div class="input-group">
+                <label for="team2-name">Team 2 Name:</label>
+                <input type="text" id="team2-name" placeholder="Enter Team 2 name" required>
+            </div>
+            <div class="input-group">
+                <label for="rounds">Number of Rounds:</label>
+                <input type="number" id="rounds" min="1" max="10" placeholder="Enter rounds" required>
+            </div>
+            <div class="input-group">
+                <label for="team2-color">Team 2 Color:</label>
+                <input type="color" id="team2-color" value="#FF0000">
+            </div>
+        </div>
+
+        <!-- Team 1 (يمين) -->
+        <div class="team team-right">
+            <div class="input-group">
+                <label for="team1-name">Team 1 Name:</label>
+                <input type="text" id="team1-name" placeholder="Enter Team 1 name" required>
+            </div>
+            <div class="input-group">
+                <label for="cardsPerRound">Cards per Round:</label>
+                <input type="number" id="cardsPerRound" min="1" max="10" placeholder="Enter number of cards" required>
+            </div>
+            <div class="input-group">
+                <label for="team1-color">Team 1 Color:</label>
+                <input type="color" id="team1-color" value="#0000FF">
+            </div>
+        </div>
+    </div>
+
+    <!-- زر Start في المنتصف -->
+    <div class="start-button-container">
+        <button onclick="startGame()">Start the Game</button>
+    </div>
+
+</section>
+
+
+    <!-- Game Section (Cards will appear after game starts) -->
+    <section id="game-play" class="game-play" style="display: none;">
+        <div class="scoreboard">
+            <div class="team-box" id="team1-score">Team 1: 0</div>
+            <div class="team-box" id="team2-score">Team 2: 0</div>
+        </div>
+
+        <h3 id="round-display">Round: 1</h3>
+
+        <div id="team1-name-display"></div>
+        <div id="team2-name-display"></div>
+
+        <!-- Card Container -->
+        <div id="card-container" class="card-container">
+            <!-- Cards will be added dynamically here -->
+        </div>
+
+        
+
+        <!-- زر "Play Again" -->
+        <button id="play-again" onclick="restartGame()" style="display: none;">Play Again</button>
+    </section>
+
+    <script src="script.js"></script>
+    <div class="stars"></div>
+    <div class="mouse-move"></div>
+
+</body>
+</html>

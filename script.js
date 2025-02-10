@@ -177,21 +177,25 @@ function flipCard(card) {
 
 function answerQuestion(isCorrect, event) {
     event.preventDefault();
-    event.stopPropagation(); 
-    
+    event.stopPropagation();
+
     const card = event.target.closest('.card');
     if (!card) return;
 
+    const cardTeam = parseInt(card.dataset.team); // تحديد الفريق صاحب الكارت
+
     if (isCorrect) {
-        updateScore(currentTeam, true);
+        updateScore(cardTeam, true); // إضافة نقطة للفريق الصحيح
         card.style.display = 'none';
         checkNextRound();
     } else {
-        showPunishment(card);
+        showPunishment(cardTeam); // تفعيل العقاب للفريق اللي اختار غلط
+        card.style.display = 'none'; // إخفاء الكارت بعد الاختيار
     }
-
-    currentTeam = currentTeam === 1 ? 2 : 1;
 }
+
+
+
 
 let usedPunishments = []; // قائمة التخزين للعقوبات المستخدمة
 
@@ -225,32 +229,28 @@ const punishments = [
     "حاول تتكلم زي اللي بيرنوا فجأة عليك ويحاولوا يقنعوك تشتري منتج أو وحدة سكنية و حاول تعمل ده معانا بطريقة تضحك"
 ];
 
-function showPunishment(card) {
-    card.style.display = 'none';
+function showPunishment(team) {
+    // إخفاء الكارت بعد الضغط على "Incorrect"
+    document.querySelector('.card[data-team="'+team+'"]').style.display = 'none';
 
-    // تحديد العقوبات المتاحة اللي لسه متكررتش
+    // التأكد من عدم تكرار العقوبة حتى انتهاء القائمة
     let availablePunishments = punishments.filter(punishment => !usedPunishments.includes(punishment));
 
     if (availablePunishments.length === 0) {
-        usedPunishments = []; // إعادة تعيين القائمة لما العقوبات تخلص
-        availablePunishments = [...punishments]; // إعادة ضبط القائمة
+        usedPunishments = []; // إعادة تعيين القائمة عند انتهاء كل العقوبات
+        availablePunishments = [...punishments];
     }
 
     // اختيار عقوبة عشوائية بدون تكرار
     const randomIndex = Math.floor(Math.random() * availablePunishments.length);
     const punishmentTextValue = availablePunishments[randomIndex];
 
-    // تخزين العقوبة المستخدمة
+    // حفظ العقوبة المستعملة لمنع تكرارها
     usedPunishments.push(punishmentTextValue);
 
     // إنشاء عنصر العقوبة
     const punishmentDiv = document.createElement('div');
     punishmentDiv.classList.add('punishment-card');
-
-    const punishmentImage = document.createElement('img');
-    punishmentImage.src = './images/punishment.jpg';
-    punishmentImage.alt = "Punishment Image";
-    punishmentDiv.appendChild(punishmentImage);
 
     const punishmentText = document.createElement('p');
     punishmentText.innerText = punishmentTextValue;
@@ -258,14 +258,20 @@ function showPunishment(card) {
 
     const buttonContainer = document.createElement('div');
     buttonContainer.classList.add('button-container');
+    
+    // ✅ **إضافة صورة العقاب**
+    const punishmentImage = document.createElement('img');
+    punishmentImage.src = './images/punishment.jpg';  // تأكد من وجود الصورة في `images/`
+    punishmentImage.alt = "Punishment Image";
+    punishmentDiv.appendChild(punishmentImage);
 
     const didItButton = document.createElement('button');
     didItButton.innerText = '✔️ Did It';
-    didItButton.onclick = () => handlePunishment(true, punishmentDiv);
+    didItButton.onclick = () => handlePunishment(team, true, punishmentDiv);
 
     const loserButton = document.createElement('button');
     loserButton.innerText = '❌ Loser';
-    loserButton.onclick = () => handlePunishment(false, punishmentDiv);
+    loserButton.onclick = () => handlePunishment(team, false, punishmentDiv);
 
     buttonContainer.appendChild(didItButton);
     buttonContainer.appendChild(loserButton);
@@ -275,11 +281,11 @@ function showPunishment(card) {
 }
 
 
-function handlePunishment(didIt, punishmentDiv) {
+function handlePunishment(team, didIt, punishmentDiv) {
     if (didIt) {
-        updateScore(currentTeam, true);
+        updateScore(team, true); // لو نفذ العقاب، ياخد نقطة
     } else {
-        updateScore(currentTeam, false);
+        updateScore(team, false); // لو رفض العقاب، يخسر نقطة
     }
 
     setTimeout(() => {
@@ -287,6 +293,8 @@ function handlePunishment(didIt, punishmentDiv) {
         checkNextRound();
     }, 500);
 }
+
+
 
 function updateScore(team, didIt) {
     if (didIt) {
@@ -307,6 +315,7 @@ function updateScore(team, didIt) {
         }
     }
 }
+
 
 function restartGame() {
     // إعادة تعيين القيم الافتراضية

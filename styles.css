@@ -606,45 +606,444 @@ body {
     height: 100%;
     z-index: 2;
     pointer-events: none;
-    overflow: hidden;
+    overflow: hidden; /* تأكد من عدم وجود أي مشكلة في إخفاء العناصر المتحركة */
 }
 
 .meteor {
     position: absolute;
-    width: 6px;
-    height: 20px;
+    width: 4px;
+    height: 15px;
     border-radius: 50%;
-    filter: blur(2px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* توهج المذنبات */
+    animation: meteorAnimation 3s linear infinite; /* الأنيميشن للمذنب */
     opacity: 0.9;
 }
 
-/* لون المذنب الأول: برتقالي ناري */
-.meteor.fire {
-    background: radial-gradient(circle, rgba(255, 165, 0, 1) 20%, rgba(255, 69, 0, 0.8) 100%);
-    box-shadow: 0px 0px 10px rgba(255, 140, 0, 0.8), 0px 0px 20px rgba(255, 69, 0, 0.9);
+/* إضافة لون عشوائي للمذنبات */
+.meteor.red {
+    background-color: rgba(255, 0, 0, 0.8); /* المذنبات الحمراء */
 }
 
-/* لون المذنب الثاني: فضي */
-.meteor.silver {
-    background: radial-gradient(circle, rgba(192, 192, 192, 1) 20%, rgba(169, 169, 169, 0.8) 100%);
-    box-shadow: 0px 0px 10px rgba(211, 211, 211, 0.8), 0px 0px 20px rgba(169, 169, 169, 0.9);
+.meteor.blue {
+    background-color: rgba(0, 0, 255, 0.8); /* المذنبات الزرقاء */
 }
 
-/* تأثير الذيل */
-.meteor::before {
+/* أنيميشن حركة المذنبات من اليمين لليسار */
+@keyframes meteorAnimation {
+    0% {
+        opacity: 1;
+        transform: translateX(100%) scale(1); /* يبدأ من اليمين */
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-100%) scale(0.5); /* ينتهي عند اليسار */
+    }
+}
+/* ✅ إزالة الـ Scroll الجانبي */
+/* ✅ ضبط الصفحة بالكامل */
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    background-color: black;
+}
+
+/* ✅ تحسين شكل الهيدر */
+.header-container {
+    display: flex;
+    justify-content: space-between; /* يخلي اللوجو على اليمين والعنوان في النص */
+    align-items: center;
+    background-color: #000;
+    padding: 20px 40px;
+    position: relative;
+}
+
+/* ✅ ضبط الحاوية الخاصة بالعنوان */
+.title-container {
+    flex: 1;
+    text-align: center;
+}
+
+/* ✅ تحسين شكل اللوجو */
+.logo-container {
+    width: 200px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* ✅ تحسين شكل العنوان */
+.animated-title {
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* ✅ تحسين شكل اللوجو */
+.ieee-logo {
+    width: 200px;
+    max-width: 100%;
+    filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.8));
+    animation: fadeIn 1.5s ease-in-out forwards;
+    opacity: 0;
+}
+
+/* ✅ تحسين أنيميشن اللوجو بحيث لا يظهر كأنه "ينط" */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ✅ تحسين تصميم الخط الأزرق أسفل الهيدر */
+header::after {
     content: "";
     position: absolute;
-    width: 10px;
-    height: 50px;
-    background: linear-gradient(to bottom, rgba(255, 165, 0, 0.8) 0%, rgba(255, 69, 0, 0) 100%);
-    filter: blur(5px);
-    top: -5px;
     left: 50%;
+    bottom: -5px;
     transform: translateX(-50%);
+    width: 100%;
+    height: 5px;
+    background: rgba(43, 156, 243, 1);
+    box-shadow: 0 0 15px rgba(43, 156, 243, 0.8), 0 0 25px rgba(43, 156, 243, 1);
 }
 
-/* الذيل للمذنب الفضي */
-.meteor.silver::before {
-    background: linear-gradient(to bottom, rgba(192, 192, 192, 0.8) 0%, rgba(169, 169, 169, 0) 100%);
+/* ✅ تحسين استجابة الموقع على الموبايل */
+@media screen and (max-width: 768px) {
+    .header-container {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .title-container {
+        flex: 2;
+        display: flex;
+        justify-content: center;
+    }
+
+    .logo-container {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .ieee-logo {
+        width: 120px;
+    }
+
+    .animated-title {
+        font-size: 28px;
+    }
 }
 
+/* ✅ تحسين شكل الإدخالات */
+.team-setup {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+}
+
+/* ✅ تحسين شكل الإدخالات */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.input-group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    max-width: 250px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* ✅ تحسين زر "Start the Game" */
+.start-button-container button {
+    font-size: 18px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    background-color: #FFD700;
+    transition: all 0.3s ease;
+}
+
+.start-button-container button:hover {
+    background-color: #FFC107;
+    transform: scale(1.1);
+}
+
+/* ✅ تحسين شكل الكروت */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+    justify-content: center;
+}
+
+.card {
+    width: 100%;
+    max-width: 150px;
+    height: 200px;
+    perspective: 1000px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* ✅ عند تمرير الماوس فوق الكارت */
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* ✅ تحسين العقاب بحيث يظهر في منتصف الشاشة */
+.punishment-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 10px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+/* ✅ تحسين شكل زر العقاب */
+.punishment-card .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.punishment-card button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.punishment-card .did-it {
+    background-color: #50b714;
+    color: white;
+}
+
+.punishment-card .loser {
+    background-color: #FF6347;
+    color: white;
+}
+
+/* ✅ تحسين تصميم الموقع على الشاشات الصغيرة */
+@media screen and (max-width: 768px) {
+    .team-setup {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .card-container {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .card {
+        max-width: 120px;
+        height: 160px;
+    }
+
+    .start-button-container button {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .animated-title {
+        font-size: 28px;
+    }
+
+    .input-group label {
+        font-size: 16px;
+    }
+
+    .input-group input {
+        font-size: 14px;
+    }
+
+    .card-container {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+}
+/* ✅ تحسين شكل الكروت */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px; /* المسافة بين الكروت */
+    padding: 20px;
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* ✅ تحسين عرض وحجم الكروت */
+.card {
+    width: 160px; /* حجم الكارت */
+    height: 220px;
+    perspective: 1000px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* ✅ ضبط خلفية الكروت بحيث الصورة تكون مضبوطة */
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ✅ تحسين استجابة الكروت في الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .card {
+        width: 130px;
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 110px;
+        height: 160px;
+    }
+}
+/* ✅ جعل العقاب يظهر في المنتصف بثبات */
+.punishment-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    height: 420px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    text-align: center;
+    padding: 20px;
+    z-index: 9999; /* ✅ يخليه يظهر فوق كل العناصر */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ✅ جعل صورة العقاب ثابتة داخل الكارت */
+.punishment-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* ✅ تحسين أزرار العقاب */
+.punishment-card .button-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.punishment-card button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.punishment-card .did-it {
+    background-color: #28a745;
+    color: white;
+}
+
+.punishment-card .loser {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* ✅ تحسين العقاب في الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .punishment-card {
+        width: 280px;
+        height: 360px;
+    }
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+}
+.start-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+.ieee-logo {
+    width: 150px;
+    transition: all 0.5s ease-in-out;
+}
+.punishment-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 300px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+}

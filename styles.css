@@ -1047,3 +1047,155 @@ header::after {
     padding: 15px;
     border-radius: 10px;
 }
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    position: relative;
+    width: 100%;
+}
+
+.title-container {
+    flex: 1;
+    text-align: center;
+    font-size: 24px;
+}
+
+.logo-container {
+    width: 120px; /* خلي اللوجو أصغر */
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* تأكد إن اللوجو ثابت وما يغطيش الكلام */
+.ieee-logo {
+    max-width: 100px;
+    height: auto;
+    position: relative;
+}
+
+/* في الموبايل خلي اللوجو فوق والنص تحت */
+@media screen and (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .logo-container {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .title-container {
+        font-size: 20px;
+    }
+}
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+/* خلي النص داخل كارت العقاب واضح وما يغطيش الصورة */
+.card .text-container {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 14px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+}
+.card .options {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 5px;
+}
+
+.card button {
+    flex: 1;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card button:active {
+    transform: scale(0.95);
+}
+
+/* في الموبايل خلى الأزرار أكبر */
+@media screen and (max-width: 768px) {
+    .card .options {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .card button {
+        font-size: 18px;
+        padding: 12px;
+    }
+}
+.card {
+    width: 120px;  /* تأكد أن الكارت متناسق */
+    height: 160px;
+    position: relative;
+    background-size: cover;  /* يخلي الصورة تملأ الكارت بالكامل */
+    background-position: center;  /* يخلي الصورة تكون في المنتصف */
+    border-radius: 10px;
+    overflow: hidden;
+}
+.card .text-container {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.5); /* خلفية شفافة عشان يكون واضح */
+    padding: 5px;
+    border-radius: 5px;
+}
+.card .text-container {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;  /* زيادة المساحة المتاحة للنص */
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.5); /* خلفية شفافة عشان يكون واضح */
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;  /* يمنع النص من النزول لسطر تاني */
+    overflow: hidden; /* يمنع تجاوز النص */
+    text-overflow: ellipsis; /* لو النص طويل يظهر بثلاث نقط ... */
+}
+.card .text-container {
+    font-size: 12px; /* تصغير الخط عشان يكون مناسب */
+    letter-spacing: 0.5px; /* تحسين المسافات بين الأحرف */
+}
+.card {
+    width: 130px;  /* كان 120px، زودته عشان النص ياخد راحته */
+    height: 180px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    overflow: hidden;
+}
+

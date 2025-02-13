@@ -89,11 +89,6 @@ function generateCards() {
     cardContainer.innerHTML = '';
     document.getElementById("round-display").innerText = `Round: ${currentRound}`;
 
-    let rows = Math.ceil(cardsPerRound / 2); // عدد الصفوف حسب عدد الكروت
-    let cols = Math.min(cardsPerRound, 5); // لا يزيد عن 5 كروت في الصف الواحد
-
-    cardContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-
     let currentCardTeam = 1;
     for (let i = 0; i < cardsPerRound; i++) {
         const card = document.createElement('div');
@@ -115,16 +110,18 @@ function generateCards() {
 
         const back = document.createElement('div');
         back.classList.add('back');
-
+        
+        // اختيار سؤال عشوائي من الأسئلة المتاحة
         const availableQuestions = questions.filter(question => !usedQuestions.includes(question));
-
+        
         if (availableQuestions.length === 0) {
+            // إعادة تعيين الأسئلة التي تم استخدامها إذا انتهت الأسئلة المتاحة
             usedQuestions = [];
         }
-
+        
         const question = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
-        usedQuestions.push(question);
-
+        usedQuestions.push(question); // إضافة السؤال المستخدم للقائمة
+        
         const questionText = document.createElement('p');
         questionText.classList.add('question-text');
         questionText.innerText = question;
@@ -154,7 +151,6 @@ function generateCards() {
         currentCardTeam = currentCardTeam === 1 ? 2 : 1;
     }
 }
-
 
 
 
